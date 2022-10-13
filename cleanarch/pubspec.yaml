@@ -52,9 +52,10 @@ dev_dependencies:
   mockito: ^5.1.0
   # https://pub.dev/packages/http_mock_adapter/
   http_mock_adapter: ^0.3.2
-
- # https://pub.dev/packages/get
+  # https://pub.dev/packages/get
   get: ^4.6.5
+  # https://pub.dev/packages/shared_preferences
+  shared_preferences: ^2.0.15
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
