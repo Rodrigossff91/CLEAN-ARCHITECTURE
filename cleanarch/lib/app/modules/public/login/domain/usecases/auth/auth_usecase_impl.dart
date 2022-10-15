@@ -10,9 +10,15 @@ class AuthUseCaseImpl implements AuthUseCase {
   AuthUseCaseImpl(this.authRespository);
   @override
   Future<Either<AuthFailure, bool>> call(String url) async {
+    final bool sucess;
     try {
-      final stores = await authRespository.auth(url);
-      return Right(stores);
+      var urls = url.split(' ');
+      if (url.isNotEmpty) {
+        sucess = await authRespository.auth(urls[0]);
+        return Right(sucess);
+      } else {
+        return Left(CredencialInvalidFailure());
+      }
     } catch (e) {
       return Left(AuthenticateFailure());
     }

@@ -11,3 +11,8 @@ class AuthenticateFailure implements AuthFailure {
   @override
   String get message => 'Falha ao autenticar usuario ';
 }
+
+class CredencialInvalidFailure implements AuthFailure {
+  @override
+  String get message => 'Credencial esta invalida ';
+}

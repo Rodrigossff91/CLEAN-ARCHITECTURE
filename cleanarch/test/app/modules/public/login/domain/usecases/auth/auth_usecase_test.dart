@@ -15,12 +15,24 @@ main() {
     final usecase = AuthUseCaseImpl(repository);
 
     //final faker = QrcodeFactory();
-    when(repository.auth('')).thenAnswer((_) async => true);
+    when(repository.auth('aaaaaa')).thenAnswer((_) async => true);
 
     //faker.generateFakeList(length: 2));
 
-    var result = await usecase('');
+    var result = await usecase('aaaaaa aaaaaaaa aaaaaa');
     expect(result.fold((l) => id, (r) => r), true);
+  });
+
+  test('Deve retornar uma falha ao tentar logar', () async {
+    final repository = MockAuthRespository();
+    final usecase = AuthUseCaseImpl(repository);
+
+    when(repository.auth('')).thenAnswer((_) async => throw Exception());
+
+    var result = await usecase('aaaaaa aaaaaaaa aaaaaa');
+
+    expect(
+        result.leftMap((l) => AuthenticateFailure), left(AuthenticateFailure));
   });
 
   test('Deve retornar uma falha ao tentar logar', () async {
@@ -31,7 +43,7 @@ main() {
 
     var result = await usecase('');
 
-    expect(
-        result.leftMap((l) => AuthenticateFailure), left(AuthenticateFailure));
+    expect(result.leftMap((l) => CredencialInvalidFailure),
+        left(CredencialInvalidFailure));
   });
 }
