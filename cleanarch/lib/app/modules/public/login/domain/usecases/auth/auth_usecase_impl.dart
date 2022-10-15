@@ -13,7 +13,7 @@ class AuthUseCaseImpl implements AuthUseCase {
     try {
       final stores = await authRespository.auth(url);
       return Right(stores);
-    } on Exception {
+    } catch (e) {
       return Left(AuthenticateFailure());
     }
   }
