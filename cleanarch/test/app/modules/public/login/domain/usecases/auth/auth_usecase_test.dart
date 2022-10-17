@@ -10,40 +10,41 @@ import 'auth_usecase_test.mocks.dart';
 
 @GenerateMocks([AuthRespository])
 main() {
+  late AuthUseCaseImpl authUseCaseImpl;
+  late AuthRespository authRespository;
+  setUp(() {
+    authRespository = MockAuthRespository();
+    authUseCaseImpl = AuthUseCaseImpl(authRespository);
+  });
   test('Deve efetuar o login passando qrcode', () async {
-    final repository = MockAuthRespository();
-    final usecase = AuthUseCaseImpl(repository);
-
     //final faker = QrcodeFactory();
-    when(repository.auth('aaaaaa')).thenAnswer((_) async => true);
+    when(authRespository.auth('aaaaaa')).thenAnswer((_) async => true);
 
     //faker.generateFakeList(length: 2));
 
-    var result = await usecase('aaaaaa aaaaaaaa aaaaaa');
+    var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
     expect(result.fold((l) => id, (r) => r), true);
+    verify(authRespository.auth('aaaaaa')).called(1);
   });
 
   test('Deve retornar uma falha ao tentar logar', () async {
-    final repository = MockAuthRespository();
-    final usecase = AuthUseCaseImpl(repository);
+    when(authRespository.auth('')).thenAnswer((_) async => throw Exception());
 
-    when(repository.auth('')).thenAnswer((_) async => throw Exception());
-
-    var result = await usecase('aaaaaa aaaaaaaa aaaaaa');
+    var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
 
     expect(
         result.leftMap((l) => AuthenticateFailure), left(AuthenticateFailure));
+    verify(authRespository.auth('aaaaaa')).called(1);
   });
 
-  test('Deve retornar uma falha ao tentar logar', () async {
-    final repository = MockAuthRespository();
-    final usecase = AuthUseCaseImpl(repository);
+  test('Deve retornar uma falha se o parametro qrcode nao for valido',
+      () async {
+    when(authRespository.auth('')).thenAnswer((_) async => throw Exception());
 
-    when(repository.auth('')).thenAnswer((_) async => throw Exception());
-
-    var result = await usecase('');
+    var result = await authUseCaseImpl('');
 
     expect(result.leftMap((l) => CredencialInvalidFailure),
         left(CredencialInvalidFailure));
+    verifyNever(authRespository.auth('aaaaaa'));
   });
 }
