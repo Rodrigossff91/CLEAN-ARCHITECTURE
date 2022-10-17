@@ -1,3 +1,7 @@
+import 'package:dartz/dartz.dart';
+
+import '../erros/auth_failure.dart';
+
 abstract class AuthRespository {
-  Future<bool> auth(String url);
+  Future<Either<AuthFailure, bool>> auth(String url);
 }

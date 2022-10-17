@@ -18,7 +18,8 @@ main() {
   });
   test('Deve efetuar o login passando qrcode', () async {
     //final faker = QrcodeFactory();
-    when(authRespository.auth('aaaaaa')).thenAnswer((_) async => true);
+    when(authRespository.auth('aaaaaa'))
+        .thenAnswer((_) async => const Right(true));
 
     //faker.generateFakeList(length: 2));
 
@@ -28,7 +29,7 @@ main() {
   });
 
   test('Deve retornar uma falha ao tentar logar', () async {
-    when(authRespository.auth('')).thenAnswer((_) async => throw Exception());
+    when(authRespository.auth('')).thenThrow((_) async => throw Exception());
 
     var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
 

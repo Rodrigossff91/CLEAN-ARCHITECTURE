@@ -1,5 +1,7 @@
 import 'package:cleanarch/app/modules/public/login/data/datasources/remotes/auth_datasource.dart';
+import 'package:dartz/dartz.dart';
 
+import '../../domain/erros/auth_failure.dart';
 import '../../domain/repositories/auth_repository.dart';
 
 class AuthRespositoryImpl implements AuthRespository {
@@ -8,5 +10,13 @@ class AuthRespositoryImpl implements AuthRespository {
   final AuthDatasource dataSource;
 
   @override
-  Future<bool> auth(String url) => dataSource.auth(url);
+  Future<Either<AuthFailure, bool>> auth(String url) async {
+    try {
+      final result = await dataSource.auth(url);
+
+      return result;
+    } on Exception catch (e) {
+      throw Exception();
+    }
+  }
 }
