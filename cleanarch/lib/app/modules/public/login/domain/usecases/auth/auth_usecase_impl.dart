@@ -10,7 +10,7 @@ class AuthUseCaseImpl implements AuthUseCase {
   AuthUseCaseImpl(this.authRespository);
   @override
   Future<Either<AuthFailure, bool>> call(String url) async {
-    final bool sucess;
+    late final sucess;
     try {
       var urls = url.split(' ');
       if (url.isNotEmpty) {
