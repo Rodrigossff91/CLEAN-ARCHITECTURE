@@ -10,13 +10,6 @@ class AuthRespositoryImpl implements AuthRespository {
   final AuthDatasource dataSource;
 
   @override
-  Future<Either<AuthFailure, bool>> auth(String url) async {
-    try {
-      final result = await dataSource.auth(url);
-
-      return result;
-    } on Exception catch (e) {
-      throw Exception();
-    }
-  }
+  Future<Either<AuthFailure, bool>> auth(String url) async =>
+      await dataSource.auth(url);
 }
