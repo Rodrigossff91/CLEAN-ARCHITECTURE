@@ -63,11 +63,13 @@ dev_dependencies:
   # https://pub.dev/packages/mockito/
   mockito: ^5.1.0
   # https://pub.dev/packages/http_mock_adapter/
-  http_mock_adapter: ^0.3.2
+  http_mock_adapter: ^0.3.3
   # https://pub.dev/packages/build_runner
   build_runner: ^2.3.0
   # https://pub.dev/packages/uuid
   uuid: ^3.0.6
+
+
   
   
 

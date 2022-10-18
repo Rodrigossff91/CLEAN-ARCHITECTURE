@@ -3,32 +3,38 @@ import 'package:cleanarch/app/modules/public/login/data/datasources/remotes/auth
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
-import 'auth_datasource_test.mocks.dart';
 
 @GenerateMocks([CustomDio])
 main() async {
   late CustomDio customDio;
   late AuthtDatasourceRemote authtDatasourceRemote;
   setUp(() {
-    customDio = MockCustomDio();
-    authtDatasourceRemote = AuthtDatasourceRemote(dio: customDio);
+    final dio = Dio(BaseOptions());
+    authtDatasourceRemote = AuthtDatasourceRemote(dio: dio as CustomDio);
   });
+
   test('Deve efetuar o login passando qrcode', () async {
-    //final faker = QrcodeFactory();
+    final dio = Dio(BaseOptions());
+    final dioAdapter = DioAdapter(dio: dio);
 
-    final httpResponse = ResponseBody.fromString(
-      '',
-      200,
-      headers: {
-        Headers.contentTypeHeader: [Headers.jsonContentType],
-      },
+    const path = 'https://example.com';
+
+    dioAdapter.onGet(
+      path,
+      (server) => server.reply(
+        200,
+        {'message': 'Success!'},
+        // Reply would wait for one-sec before returning data.
+        delay: const Duration(seconds: 1),
+      ),
     );
-    when(customDio.get('aaaaaa')).thenAnswer((_) async => Response(
-        requestOptions: RequestOptions(path: httpResponse.toString())));
 
+    final response = await dio.get(path);
+
+    print(response.data);
     //faker.generateFakeList(length: 2));
 
     var result = await authtDatasourceRemote.auth('aaaaaa');
