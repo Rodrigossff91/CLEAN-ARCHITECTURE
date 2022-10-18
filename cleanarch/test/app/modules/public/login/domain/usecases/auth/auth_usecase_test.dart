@@ -33,8 +33,7 @@ main() {
 
     var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
 
-    expect(
-        result.leftMap((l) => AuthenticateFailure), left(AuthenticateFailure));
+    expect(result.leftMap((l) => l is AuthenticateFailure), left(true));
     verify(authRespository.auth('aaaaaa')).called(1);
   });
 
@@ -44,8 +43,7 @@ main() {
 
     var result = await authUseCaseImpl('');
 
-    expect(result.leftMap((l) => CredencialInvalidFailure),
-        left(CredencialInvalidFailure));
+    expect(result.leftMap((l) => l is CredencialInvalidFailure), left(true));
     verifyNever(authRespository.auth('aaaaaa'));
   });
 }
