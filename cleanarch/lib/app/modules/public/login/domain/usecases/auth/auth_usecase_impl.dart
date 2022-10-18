@@ -20,6 +20,8 @@ class AuthUseCaseImpl implements AuthUseCase {
       } else {
         return Left(CredencialInvalidFailure());
       }
+    } on ServerFailure catch (e) {
+      return Left(e);
     } catch (e) {
       return Left(AuthenticateFailure());
     }

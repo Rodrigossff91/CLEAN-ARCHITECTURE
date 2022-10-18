@@ -16,3 +16,8 @@ class CredencialInvalidFailure implements AuthFailure {
   @override
   String get message => 'Credencial esta invalida ';
 }
+
+class ServerFailure implements AuthFailure {
+  @override
+  String get message => 'Falha de servidor';
+}
