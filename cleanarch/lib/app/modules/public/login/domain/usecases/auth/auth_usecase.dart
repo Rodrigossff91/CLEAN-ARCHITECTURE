@@ -1,4 +1,4 @@
-import 'package:cleanarch/app/modules/public/login/domain/erros/auth_failure.dart';
+import 'package:cleanarch/app/modules/public/login/domain/errors/auth_failure.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../../../../core/usecase/usecase.dart';

@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cleanarch/app/core/appClient/custom_dio.dart';
-import 'package:cleanarch/app/modules/public/login/domain/erros/auth_failure.dart';
+import 'package:cleanarch/app/modules/public/login/domain/errors/auth_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 

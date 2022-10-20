@@ -1,6 +1,6 @@
 import 'package:cleanarch/app/modules/public/login/data/datasources/remotes/auth_datasource.dart';
 import 'package:cleanarch/app/modules/public/login/data/repositories/auth_repository_impl.dart';
-import 'package:cleanarch/app/modules/public/login/domain/erros/auth_failure.dart';
+import 'package:cleanarch/app/modules/public/login/domain/errors/auth_failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
