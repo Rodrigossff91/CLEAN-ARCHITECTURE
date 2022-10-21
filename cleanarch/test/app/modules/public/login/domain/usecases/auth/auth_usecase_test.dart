@@ -29,7 +29,8 @@ main() {
   });
 
   test('Deve retornar uma falha ao tentar logar', () async {
-    when(authRespository.auth('')).thenThrow((_) async => throw Exception());
+    when(authRespository.auth('aaaaaa'))
+        .thenAnswer((_) => throw AuthenticateFailure());
 
     var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
 
@@ -37,9 +38,20 @@ main() {
     verify(authRespository.auth('aaaaaa')).called(1);
   });
 
+  test('Deve retornar falha de servidor', () async {
+    when(authRespository.auth('aaaaaa'))
+        .thenAnswer((_) => throw ServerFailure());
+
+    var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
+
+    expect(result.leftMap((l) => l is ServerFailure), left(true));
+    verify(authRespository.auth('aaaaaa')).called(1);
+  });
+
   test('Deve retornar uma falha se o parametro qrcode nao for valido',
       () async {
-    when(authRespository.auth('')).thenAnswer((_) async => throw Exception());
+    when(authRespository.auth(''))
+        .thenAnswer((_) => throw CredencialInvalidFailure());
 
     var result = await authUseCaseImpl('');
 
