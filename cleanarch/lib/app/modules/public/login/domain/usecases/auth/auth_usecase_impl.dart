@@ -24,6 +24,8 @@ class AuthUseCaseImpl implements AuthUseCase {
       return Left(e);
     } on AuthenticateFailure catch (e) {
       return Left(e);
+    } on GenericFailure catch (e) {
+      return Left(e);
     }
   }
 }

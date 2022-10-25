@@ -36,4 +36,14 @@ main() {
     expect(result.leftMap((l) => l is AuthenticateFailure), left(true));
     verify(authRespository.auth('aaaaaa'));
   });
+
+  test('Deve retornar uma falha generica', () async {
+    when(authRespository.auth('aaaaaa'))
+        .thenAnswer((_) => throw GenericFailure());
+
+    var result = await authRespository.auth('aaaaaa');
+
+    expect(result.leftMap((l) => l is GenericFailure), left(true));
+    verify(authRespository.auth('aaaaaa')).called(1);
+  });
 }

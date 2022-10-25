@@ -26,7 +26,7 @@ class AuthtDatasourceRemote implements AuthDatasource {
       }
       return Right(response.data);
     } catch (e) {
-      throw Left(e);
+      return Left(GenericFailure());
     }
   }
 }
