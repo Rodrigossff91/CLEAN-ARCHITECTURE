@@ -14,8 +14,8 @@ class AuthRespositoryImpl implements AuthRespository {
     try {
       var result = await dataSource.auth(url);
       return result;
-    } catch (e) {
-      return Left(AuthenticateFailure());
+    } on AuthenticateFailure catch (e) {
+      return Left(e);
     }
   }
 }

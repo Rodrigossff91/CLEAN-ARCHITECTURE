@@ -5,15 +5,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
 import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+
+import 'auth_datasource_test.mocks.dart';
 
 @GenerateMocks([CustomDio])
 main() async {
-  late CustomDio customDio;
   late AuthtDatasourceRemote authtDatasourceRemote;
   setUp(() {
-    final dio = Dio(BaseOptions());
-    authtDatasourceRemote = AuthtDatasourceRemote(dio: dio as CustomDio);
+    final dio = MockCustomDio();
+    authtDatasourceRemote = AuthtDatasourceRemote(dio: dio);
   });
 
   test('Deve efetuar o login passando qrcode', () async {
@@ -32,14 +32,12 @@ main() async {
       ),
     );
 
-    final response = await dio.get(path);
+    var response = await dio.get(path);
+    var result = await authtDatasourceRemote.auth(path);
+    expect(response.statusCode, 200);
 
-    print(response.data);
-    //faker.generateFakeList(length: 2));
-
-    var result = await authtDatasourceRemote.auth('aaaaaa');
     expect(result.fold((l) => id, (r) => r), true);
-    verify(authtDatasourceRemote.auth('aaaaaa')).called(1);
+    //  verify(authtDatasourceRemote.auth(path)).called(1);
   }, skip: true);
 
 //   test('Deve retornar uma falha ao tentar logar', () async {

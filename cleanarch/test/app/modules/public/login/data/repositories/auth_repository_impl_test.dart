@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'auth_repository_test.mocks.dart';
+import 'auth_repository_impl_test.mocks.dart';
 
 @GenerateMocks([AuthDatasource])
 main() {
@@ -29,11 +29,11 @@ main() {
 
   test('Deve retornar uma falha ao tentar logar', () async {
     when(authRespository.auth('aaaaaa'))
-        .thenThrow((_) async => throw Exception());
+        .thenAnswer((_) => throw AuthenticateFailure());
 
     var result = await authRespository.auth('aaaaaa');
 
     expect(result.leftMap((l) => l is AuthenticateFailure), left(true));
-    verify(authRespository.auth('aaaaaa')).called(1);
+    verify(authRespository.auth('aaaaaa'));
   });
 }
