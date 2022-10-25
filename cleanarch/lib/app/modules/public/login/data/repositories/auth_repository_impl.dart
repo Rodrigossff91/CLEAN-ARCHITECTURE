@@ -16,6 +16,8 @@ class AuthRespositoryImpl implements AuthRespository {
       return result;
     } on AuthenticateFailure catch (e) {
       return Left(e);
+    } catch (e) {
+      throw Left(e);
     }
   }
 }

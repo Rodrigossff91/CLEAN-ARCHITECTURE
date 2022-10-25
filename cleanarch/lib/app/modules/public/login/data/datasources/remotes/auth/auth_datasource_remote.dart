@@ -19,13 +19,14 @@ class AuthtDatasourceRemote implements AuthDatasource {
     try {
       response = await dio.get(url);
 
-      if (response.statusCode == 200) {
-        return Right(response.data);
-      } else {
-        throw AuthenticateFailure;
+      if (response.statusCode == 400) {
+        return Left(AuthenticateFailure());
+      } else if (response.statusCode == 500) {
+        return Left(ServerFailure());
       }
-    } on AuthenticateFailure catch (e) {
-      return Left(e);
+      return Right(response.data);
+    } catch (e) {
+      throw Left(e);
     }
   }
 }
