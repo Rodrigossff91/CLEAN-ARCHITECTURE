@@ -1,0 +1,27 @@
+#!/bin/sh
+# To use add to `.git/hooks/`
+# Should be named `pre-commit`
+# Make executable with `chmod +x`
+cd cleanarch
+
+# Run Flutter format
+fvm flutter format lib/ test/
+if [ "$?" == "1" ]; then
+    exit -1;
+fi
+
+
+# Run Flutter lint
+fvm flutter analyze
+if [ "$?" == "1" ]; then
+    exit -1;
+fi
+
+# Run tests
+fvm flutter test  --coverage
+if [ "$?" == "1" ]; then
+    exit -1;
+fi
+
+# Ok, we're good to go.
+exit 0
