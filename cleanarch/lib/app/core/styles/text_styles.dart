@@ -13,6 +13,9 @@ class TextStyles {
 
   TextStyle get textPrimaryFontRegular =>
       TextStyle(fontFamily: font, fontWeight: FontWeight.normal);
+
+  TextStyle get textButtonLabel =>
+      textPrimaryFontRegular.copyWith(fontSize: 14);
 }
 
 extension TextStylesExtensions on BuildContext {
