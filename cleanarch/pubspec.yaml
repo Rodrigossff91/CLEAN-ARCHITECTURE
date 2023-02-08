@@ -46,6 +46,8 @@ dependencies:
   flutter_dotenv: ^5.0.2
   # https://pub.dev/packages/dio
   dio: ^4.0.6
+  # https://pub.dev/packages/intl
+  intl: ^0.18.0
 
  
 
@@ -70,8 +72,7 @@ dev_dependencies:
   uuid: ^3.0.6
   # https://pub.dev/packages/http
   http: ^0.13.5
-  # https://pub.dev/packages/intl
-  intl: ^0.18.0
+ 
 
 
   
