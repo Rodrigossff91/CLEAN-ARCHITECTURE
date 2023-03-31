@@ -15,7 +15,7 @@ cd .git/hooks
 ## Cria um atalho
 ln -s ../../legale_app/pre-commit .
 
-Git Flow
+## Git Flow
 
 Regra para commits:
 
@@ -35,7 +35,7 @@ REFACTOR: .. descrição (refatorações)
 
 2. Branches: (gitflow e criação de branches)
 
-BRANCHES
+## BRANCHES
 
 MAIN
    |-- HOT FIX
