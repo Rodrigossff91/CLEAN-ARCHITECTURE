@@ -18,7 +18,7 @@ class ApiClient {
     if (mock == true) {
       return dios!;
     } else {
-      var _dio = Dio(BaseOptions(
+      final _dio = Dio(BaseOptions(
           baseUrl: baseUrl,
           connectTimeout: 60000,
           validateStatus: (status) {
@@ -27,11 +27,11 @@ class ApiClient {
         ..interceptors.addAll([
           InterceptorsWrapper(
               onRequest: (RequestOptions options, handler) async {
-            var token = await UserManager.getToken();
+            final token = await UserManager.getToken();
 
             if (token != null) {
-              var data = <String, dynamic>{};
-              data[HttpHeaders.authorizationHeader] = "Bearer $token ";
+              final data = <String, dynamic>{};
+              data[HttpHeaders.authorizationHeader] = 'Bearer $token ';
               data['x-mobile'] = true;
               options.headers.addAll(data);
               log(data.toString());

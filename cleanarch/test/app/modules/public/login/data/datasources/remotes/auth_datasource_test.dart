@@ -9,7 +9,7 @@ import 'package:mockito/annotations.dart';
 import 'auth_datasource_test.mocks.dart';
 
 @GenerateMocks([CustomDio])
-main() async {
+void main() async {
   late AuthtDatasourceRemote authtDatasourceRemote;
   setUp(() {
     final dio = MockCustomDio();
@@ -32,8 +32,8 @@ main() async {
       ),
     );
 
-    var response = await dio.get(path);
-    var result = await authtDatasourceRemote.auth(path);
+    final response = await dio.get(path);
+    final result = await authtDatasourceRemote.auth(path);
     expect(response.statusCode, 200);
 
     expect(result.fold((l) => id, (r) => r), true);

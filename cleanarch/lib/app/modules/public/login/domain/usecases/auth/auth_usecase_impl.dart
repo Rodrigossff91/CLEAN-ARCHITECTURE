@@ -12,7 +12,7 @@ class AuthUseCaseImpl implements AuthUseCase {
   Future<Either<AuthFailure, bool>> call(String url) async {
     dynamic sucess = true;
     try {
-      var urls = url.split(' ');
+      final urls = url.split(' ');
       if (url.isNotEmpty) {
         sucess = await authRespository.auth(urls[0]);
 

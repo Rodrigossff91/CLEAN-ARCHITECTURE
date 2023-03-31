@@ -12,7 +12,7 @@ class AuthRespositoryImpl implements AuthRespository {
   @override
   Future<Either<AuthFailure, bool>> auth(String url) async {
     try {
-      var result = await dataSource.auth(url);
+      final result = await dataSource.auth(url);
       return result;
     } on AuthenticateFailure catch (e) {
       return Left(e);

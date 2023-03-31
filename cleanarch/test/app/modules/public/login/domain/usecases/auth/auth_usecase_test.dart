@@ -9,7 +9,7 @@ import 'package:mockito/mockito.dart';
 import 'auth_usecase_test.mocks.dart';
 
 @GenerateMocks([AuthRespository])
-main() {
+void main() {
   late AuthUseCaseImpl authUseCaseImpl;
   late AuthRespository authRespository;
   setUp(() {
@@ -23,7 +23,7 @@ main() {
 
     //faker.generateFakeList(length: 2));
 
-    var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
+    final result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
     expect(result.fold((l) => id, (r) => r), true);
     verify(authRespository.auth('aaaaaa')).called(1);
   });
@@ -32,7 +32,7 @@ main() {
     when(authRespository.auth('aaaaaa'))
         .thenAnswer((_) => throw AuthenticateFailure());
 
-    var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
+    final result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
 
     expect(result.leftMap((l) => l is AuthenticateFailure), left(true));
     verify(authRespository.auth('aaaaaa')).called(1);
@@ -42,7 +42,7 @@ main() {
     when(authRespository.auth('aaaaaa'))
         .thenAnswer((_) => throw ServerFailure());
 
-    var result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
+    final result = await authUseCaseImpl('aaaaaa aaaaaaaa aaaaaa');
 
     expect(result.leftMap((l) => l is ServerFailure), left(true));
     verify(authRespository.auth('aaaaaa')).called(1);
@@ -53,7 +53,7 @@ main() {
     when(authRespository.auth(''))
         .thenAnswer((_) => throw CredencialInvalidFailure());
 
-    var result = await authUseCaseImpl('');
+    final result = await authUseCaseImpl('');
 
     expect(result.leftMap((l) => l is CredencialInvalidFailure), left(true));
     verifyNever(authRespository.auth('aaaaaa'));
@@ -63,7 +63,7 @@ main() {
     when(authRespository.auth('aaaaaa'))
         .thenAnswer((_) => throw GenericFailure());
 
-    var result = await authUseCaseImpl('aaaaaa');
+    final result = await authUseCaseImpl('aaaaaa');
 
     expect(result.leftMap((l) => l is GenericFailure), left(true));
     verify(authRespository.auth('aaaaaa')).called(1);

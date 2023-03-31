@@ -9,7 +9,7 @@ import 'package:mockito/mockito.dart';
 import 'auth_repository_impl_test.mocks.dart';
 
 @GenerateMocks([AuthDatasource])
-main() {
+void main() {
   late AuthDatasource datasource;
   late AuthRespositoryImpl authRespository;
   setUp(() {
@@ -22,7 +22,7 @@ main() {
 
     //faker.generateFakeList(length: 2));
 
-    var result = await authRespository.auth('aaaaaa');
+    final result = await authRespository.auth('aaaaaa');
     expect(result.fold((l) => id, (r) => r), true);
     verify(datasource.auth('aaaaaa')).called(1);
   });
@@ -31,7 +31,7 @@ main() {
     when(authRespository.auth('aaaaaa'))
         .thenAnswer((_) => throw AuthenticateFailure());
 
-    var result = await authRespository.auth('aaaaaa');
+    final result = await authRespository.auth('aaaaaa');
 
     expect(result.leftMap((l) => l is AuthenticateFailure), left(true));
     verify(authRespository.auth('aaaaaa'));
@@ -41,7 +41,7 @@ main() {
     when(authRespository.auth('aaaaaa'))
         .thenAnswer((_) => throw GenericFailure());
 
-    var result = await authRespository.auth('aaaaaa');
+    final result = await authRespository.auth('aaaaaa');
 
     expect(result.leftMap((l) => l is GenericFailure), left(true));
     verify(authRespository.auth('aaaaaa')).called(1);
